@@ -15,13 +15,11 @@ class Game:
     def show_bg(self, surface):
         for row in range(ROWS):
             for col in range(COLS):
-                if (row + col) % 2 == 0:
-                    color = (234, 235, 200) # pale green
-                else:
-                    color = (119, 154, 88) # dark green
-
+                #color
+                color = '#EAEBC8' if (row + col) % 2 == 0 else '#779A58'
+                #rect
                 rect = (col * SQSIZE, row * SQSIZE, SQSIZE, SQSIZE)
-
+                #blit
                 pygame.draw.rect(surface, color, rect)
 
     def show_pieces(self, surface):
@@ -38,3 +36,16 @@ class Game:
                         img_center = col * SQSIZE + SQSIZE // 2, row * SQSIZE + SQSIZE //2
                         piece.texture_rect = img.get_rect(center=img_center)
                         surface.blit(img, piece.texture_rect)
+
+
+    def show_moves(self, surface):
+        if self.dragger.dragging:
+            piece = self.dragger.piece
+
+            for move in piece.moves:
+                #color
+                color = '#C86464' if (move.final.row + move.final.col) % 2 == 0 else '#C84646'
+                #rect
+                rect = (move.final.col * SQSIZE, move.final.row * SQSIZE, SQSIZE, SQSIZE)
+                #blit
+                pygame.draw.rect(surface, color, rect)
